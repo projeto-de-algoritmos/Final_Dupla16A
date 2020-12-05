@@ -1,4 +1,4 @@
-const DIR = 'hehe/'
+const DIR = '../images/'
 export const genGraph = (num) => {
   let base = []
   let nodes = []
@@ -7,8 +7,9 @@ export const genGraph = (num) => {
   for(let i = 0; i < num; i++){
     let aux = {
       id: i,
-      image: `${DIR}Network-Pipe-icon.png`,
-      shape: 'image',
+      image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+      shape: 'circularImage',
+			background: '#000',
       edges: []
     }
 
@@ -41,5 +42,5 @@ export const genGraph = (num) => {
 
   console.log(res)
 
-  return base
+  return res
 }

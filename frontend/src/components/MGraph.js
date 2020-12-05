@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import Graph from "react-graph-vis";
-import { level } from '../levels.js'
 
-const MGraph = ({events, network}) => {
-  const [graph, setGraph] = useState(level.levelSP);
+const MGraph = ({ setNetwork, network, handler }) => {
+  const [graph, setGraph] = useState(network);
  
   const options = {
-    layout: {
-    },
     edges: {
       color: "#000000"
     },
@@ -16,10 +13,10 @@ const MGraph = ({events, network}) => {
  
   return (
 			<Graph
-				getNetwork={network}
+				getNetwork={setNetwork}
 				graph={graph}
 				options={options}
-				events={events}
+				events={handler}
 			/>
   );
 }
