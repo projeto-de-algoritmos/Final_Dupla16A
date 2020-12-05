@@ -1,6 +1,8 @@
 const DIR = 'hehe/'
 export const genGraph = (num) => {
   let base = []
+  let nodes = []
+  let edges = []
 
   for(let i = 0; i < num; i++){
     let aux = {
@@ -25,7 +27,19 @@ export const genGraph = (num) => {
     base.push(aux)
   }
 
-  console.log(base)
+  for(let i = 0; i < num; i++){
+    nodes.push({id: base[i].id, image: base[i].image, shape: base[i].shape})
+    for(let j = 0; j < base[i].edges.length; j++){
+      edges.push({from: base[i].id, to: base[i].edges[j]})
+    }
+  }
 
-  //return base
+  let res = {
+    nodes: nodes,
+    edges: edges
+  }
+
+  console.log(res)
+
+  return base
 }
