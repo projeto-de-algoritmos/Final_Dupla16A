@@ -18,7 +18,7 @@ export const genGraph = (num) => {
     
     for(let j = 0; j < edge_count; j++){
       let newEdge = Math.floor(Math.random() * num)
-      while(edge_list.includes(newEdge)){
+      while(edge_list.includes(newEdge) || newEdge == i){
         newEdge = Math.floor(Math.random() * num)
       }
       edge_list.push(newEdge)
