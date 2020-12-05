@@ -8,6 +8,12 @@ const MGraph = ({ setNetwork, network, handler }) => {
     edges: {
       color: "#000000"
     },
+		nodes: {
+			borderWidth: 10,
+			color: {
+				border: 'green'
+			}
+		},
     height: "700px",
   };
  
