@@ -13,7 +13,7 @@ export const genGraph = (num) => {
       edges: []
     }
 
-    let edge_count = Math.floor(((Math.random() * num) + 1)/2)
+    let edge_count = Math.floor(((Math.random() * num) + 2)/2)
     let edge_list = []
     
     for(let j = 0; j < edge_count; j++){
@@ -31,7 +31,11 @@ export const genGraph = (num) => {
   for(let i = 0; i < num; i++){
     nodes.push({id: base[i].id, image: base[i].image, shape: base[i].shape})
     for(let j = 0; j < base[i].edges.length; j++){
-      edges.push({from: base[i].id, to: base[i].edges[j]})
+      edges.push({
+        from: base[i].id,
+        to: base[i].edges[j],
+        label: (Math.floor(Math.random() * 35) + 1) * ((Math.round(Math.random()) * 2) - 1)
+      })
     }
   }
 
@@ -40,7 +44,6 @@ export const genGraph = (num) => {
     edges: edges
   }
 
-  console.log(res)
 
   return res
 }

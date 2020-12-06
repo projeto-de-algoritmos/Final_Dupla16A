@@ -3,6 +3,7 @@ import MGraph from './MGraph'
 import { genGraph } from '../util/GraphGen'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
+import { kruskalGraph } from '../util/PDGraph'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,7 +32,7 @@ const QuestCatalog = () => {
 		selectNode: function (event) {
 			var { nodes, edges } = event;
 			var newGraph = graph;
-			console.log('newGraph', selectedList)
+      console.log(kruskalGraph(newGraph))
 			newGraph.nodes.forEach((item, index) => {
 				if (item.id === nodes[0]){
 					var newItem = true;
