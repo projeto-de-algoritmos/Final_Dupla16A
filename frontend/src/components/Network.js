@@ -21,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function checkNode(graph, list, newItem){
+	console.log('new item', newItem)
+	var validation = false;
+	console.log('entrei', list)
+	graph.edges.forEach((item, index) => {
+		if(list[list.length - 1].id === item.from && newItem.id === item.to){
+			validation = true;
+		}
+	})
+	return validation;
+}
 const QuestCatalog = () => {
 	const [graph, setGraph] = useState(genGraph(10))
   const [selectedList, setSelectedList] = useState([]); 
@@ -32,7 +43,6 @@ const QuestCatalog = () => {
 		selectNode: function (event) {
 			var { nodes, edges } = event;
 			var newGraph = graph;
-      console.log(kruskalGraph(newGraph))
 			newGraph.nodes.forEach((item, index) => {
 				if (item.id === nodes[0]){
 					var newItem = true;
@@ -40,7 +50,7 @@ const QuestCatalog = () => {
 						if(lista.id === item.id)
 							newItem = false;
 					})
-					if(newItem)
+					if(newItem){
 						if(selectedList.length == 0){
 							newGraph.nodes[index] = {...item, 'color': {
 								background: 'rgba(50,205,50, 1)',
@@ -48,10 +58,19 @@ const QuestCatalog = () => {
 							}}
 							setSelectedList([...selectedList, item]);
 						}
+						else if(checkNode(graph, selectedList, item)){
+							newGraph.nodes[index] = {...item, 'color': {
+								background: 'rgba(50,205,50, 1)',
+								border: 'rgba(50,161,47, 1)'
+							}}
+							setSelectedList([...selectedList, item]);
+						}
+					}
 				}
 			})
 			setGraph(newGraph);
 			network.setData(graph)
+			console.log('selectedList', selectedList)
 		}
 	}
 
