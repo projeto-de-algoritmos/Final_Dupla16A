@@ -3,6 +3,10 @@ export const genGraph = (num, initialNode, finalNode) => {
   let base = []
   let nodes = []
   let edges = []
+  let allEdges = [[]]
+
+  for(let i = 0; i < num; i++)
+    allEdges[i.toString()] = []
 
   for(let i = 0; i < num; i++){
 		let aux
@@ -47,9 +51,10 @@ export const genGraph = (num, initialNode, finalNode) => {
     
     for(let j = 0; j < edge_count; j++){
       let newEdge = Math.floor(Math.random() * num).toString()
-      while(edge_list.includes(newEdge) || newEdge == i){
+      while(edge_list.includes(newEdge) || newEdge == i || allEdges[newEdge].includes(i.toString())){
         newEdge = Math.floor(Math.random() * num).toString()
       }
+      allEdges[i.toString()].push(newEdge)
       edge_list.push(newEdge)
       aux.edges.push(newEdge)
     }
