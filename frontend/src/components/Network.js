@@ -3,7 +3,7 @@ import MGraph from './MGraph'
 import { genGraph } from '../util/GraphGen'
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
-import { kruskalGraph } from '../util/DPGraph'
+import { bellmanFord } from '../util/DPGraph'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,6 +35,7 @@ const QuestCatalog = () => {
 			initialNode = item
 	})
   const [selectedList, setSelectedList] = useState([initialNode]); 
+	const [caminho, setCaminho] = useState(0)
   const [network, setNetwork] = useState();
   const classes = useStyles();
 
@@ -54,6 +55,12 @@ const QuestCatalog = () => {
 		selectNode: function (event) {
 			var { nodes, edges } = event;
 			var newGraph = graph;
+      newGraph.edges.forEach(elem => {
+        if(elem.from == selectedList[selectedList.length-1].id && elem.to == nodes[0]){
+          setCaminho(caminho+parseInt(elem.label,10))
+        }
+      })
+			newGraph.nodes.forEach((item, index) => {
 			newGraph.nodes.forEach((item, index) => {
 				if (item.id === nodes[0]){
 					var newItem = true;
@@ -77,18 +84,14 @@ const QuestCatalog = () => {
 							}
 							else {
 								setSelectedList([...selectedList, item]);
-								verificarCaminho().map((item, index) => {
-									if(item.id !== selectedList[index].id){
-										setLevel(level)
-										alert('Caminho errado');
-										return;
-									}
-									else{
-										setLevel(level + 10)
-										alert('Caminho correto');
-										return;
-									}
-								})
+								if (bellmanFord(graph, initialNode.id, finalNode) !== caminho){
+									setLevel(level)
+									alert('Caminho errado');
+								}
+								else{
+									setLevel(level + 10)
+									alert('Caminho correto');
+								}
 							}
 						}
 					}
