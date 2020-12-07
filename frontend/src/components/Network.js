@@ -69,10 +69,27 @@ const QuestCatalog = () => {
 							setSelectedList([...selectedList, item]);
 						}
 						else if(checkNode(graph, selectedList, item)){
-							newGraph.nodes[index] = {...item, 'color': {
-								border: 'rgba(50,161,47, 1)'
-							}, borderWidth: 10}
-							setSelectedList([...selectedList, item]);
+							if(item.id != finalNode){
+								newGraph.nodes[index] = {...item, 'color': {
+									border: 'rgba(50,161,47, 1)'
+								}, borderWidth: 10}
+								setSelectedList([...selectedList, item]);
+							}
+							else {
+								setSelectedList([...selectedList, item]);
+								verificarCaminho().map((item, index) => {
+									if(item.id !== selectedList[index].id){
+										setLevel(level)
+										alert('Caminho errado');
+										return;
+									}
+									else{
+										setLevel(level + 10)
+										alert('Caminho correto');
+										return;
+									}
+								})
+							}
 						}
 					}
 				}
