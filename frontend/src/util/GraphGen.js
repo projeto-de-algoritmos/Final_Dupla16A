@@ -80,5 +80,6 @@ export const genGraph = (num, initialNode, finalNode) => {
   }
 
 
+	console.log('gen')
   return res
 }

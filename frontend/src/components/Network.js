@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MGraph from './MGraph'
 import { genGraph } from '../util/GraphGen'
 import { makeStyles } from '@material-ui/core/styles';
@@ -23,24 +23,32 @@ const useStyles = makeStyles((theme) => ({
 
 const QuestCatalog = () => {
   const [level, setLevel] = useState(10); 
-	var initialNode = Math.floor(Math.random()*level)
-	console.log("initial", initialNode)
-	var finalNode = initialNode;
-	while (finalNode === initialNode)
-		finalNode = Math.abs(Math.floor(Math.random()*level) - initialNode)
-	console.log("final", finalNode)
+	var initialNode = 3
+	var initial
+	var finalNode = 8
 	const [graph, setGraph] = useState(genGraph(level, initialNode, finalNode))
-	graph.nodes.map((item, index) => {
-		if (index == initialNode)
-			initialNode = item
-	})
-  const [selectedList, setSelectedList] = useState([initialNode]); 
+  const [selectedList, setSelectedList] = useState([]); 
 	const [caminho, setCaminho] = useState(0)
   const [network, setNetwork] = useState();
   const classes = useStyles();
+	if(selectedList.length === 0){
+		graph.nodes.map((item, index) => {
+			if (index == initialNode)
+				initial = item
+		})
+		console.log('initial', initial)
+		setSelectedList([initial])
+	}
+
+	useEffect(() => {
+		console.log('a')
+		if(network !== undefined){
+			setGraph(genGraph(level, initialNode, finalNode))
+			network.setData(graph)
+		}
+	}, [level])
 
 	function checkNode(graph, list, newItem){
-		console.log('new item', newItem)
 		var validation = false;
 		graph.edges.forEach((item, index) => {
 			if(list[list.length - 1].id === item.from && newItem.id === item.to && newItem.id !== initialNode.id){
@@ -50,17 +58,16 @@ const QuestCatalog = () => {
 		return validation;
 	}
 
-
   const handleSelect = {
 		selectNode: function (event) {
 			var { nodes, edges } = event;
 			var newGraph = graph;
-      newGraph.edges.forEach(elem => {
-        if(elem.from == selectedList[selectedList.length-1].id && elem.to == nodes[0]){
-          setCaminho(caminho+parseInt(elem.label,10))
-        }
-      })
-			newGraph.nodes.forEach((item, index) => {
+			if(selectedList.length !== 0)
+				newGraph.edges.forEach(elem => {
+					if(elem.from == selectedList[selectedList.length-1].id && elem.to == nodes[0]){
+						setCaminho(caminho+parseInt(elem.label,10))
+					}
+				})
 			newGraph.nodes.forEach((item, index) => {
 				if (item.id === nodes[0]){
 					var newItem = true;
@@ -69,13 +76,9 @@ const QuestCatalog = () => {
 							newItem = false;
 					})
 					if(newItem){
-						if(selectedList.length == 0){
-							newGraph.nodes[index] = {...item, 'color': {
-								border: 'rgba(50,161,47, 1)'
-							}, borderWidth: 10}
-							setSelectedList([...selectedList, item]);
-						}
-						else if(checkNode(graph, selectedList, item)){
+						if(checkNode(graph, selectedList, item)){
+							console.log('new item', newItem)
+							console.log('finalNode', finalNode)
 							if(item.id != finalNode){
 								newGraph.nodes[index] = {...item, 'color': {
 									border: 'rgba(50,161,47, 1)'
@@ -83,22 +86,24 @@ const QuestCatalog = () => {
 								setSelectedList([...selectedList, item]);
 							}
 							else {
+								console.log('caminho', caminho)
 								setSelectedList([...selectedList, item]);
-								if (bellmanFord(graph, initialNode.id, finalNode) !== caminho){
-									setLevel(level)
+								if (bellmanFord(graph, initialNode, finalNode) !== caminho){
 									alert('Caminho errado');
+									setLevel(level)
 								}
 								else{
 									setLevel(level + 10)
 									alert('Caminho correto');
 								}
+								newGraph = genGraph(level, initialNode, finalNode)
 							}
 						}
+						setGraph(newGraph);
+						network.setData(graph)
 					}
 				}
 			})
-			setGraph(newGraph);
-			network.setData(graph)
 			console.log('selectedList', selectedList)
 			console.log('graph', graph)
 		}
@@ -106,12 +111,7 @@ const QuestCatalog = () => {
 
 	return (
 		<div>
-			<div style={{justifyContent: 'center', display: 'flex'}}>
-				<Button onClick={() => {console.log('kruskal', kruskalGraph(graph))}}>Melhor caminho possível</Button>
-			</div>
-			<div>
-				<MGraph network={graph} setNetwork={setNetwork}handler={handleSelect}/>
-			</div>
+			<MGraph network={graph} setNetwork={setNetwork}handler={handleSelect}/>
 		</div>
 	);
 }
