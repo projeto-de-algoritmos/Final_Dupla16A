@@ -26,32 +26,59 @@ const QuestCatalog = () => {
 	var initialNode = 3
 	var initial
 	var finalNode = 8
-	const [graph, setGraph] = useState(genGraph(level, initialNode, finalNode))
-  const [selectedList, setSelectedList] = useState([]); 
+  const [selectedList, setSelectedList] = useState([{
+				id: '3',
+				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+				shape: 'circularImage',
+				background: '#000',
+				color: {
+					border: 'blue'
+				},
+				borderWidth: 10,
+				edges: []
+			}]); 
 	const [caminho, setCaminho] = useState(0)
   const [network, setNetwork] = useState();
+	const [graph, setGraph] = useState({nodes: [], edges: []})
   const classes = useStyles();
-	if(selectedList.length === 0){
-		graph.nodes.map((item, index) => {
-			if (index == initialNode)
-				initial = item
-		})
-		console.log('initial', initial)
-		setSelectedList([initial])
-	}
+
+	useEffect(() => {
+		setSelectedList([{
+				id: '3',
+				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+				shape: 'circularImage',
+				background: '#000',
+				color: {
+					border: 'blue'
+				},
+				borderWidth: 10,
+				edges: []
+			}])
+		if(network !== undefined)
+		network.setData(graph)
+	}, [graph])
 
 	useEffect(() => {
 		console.log('a')
-		if(network !== undefined){
-			setGraph(genGraph(level, initialNode, finalNode))
-			network.setData(graph)
-		}
-	}, [level])
-
-	function checkNode(graph, list, newItem){
+		setSelectedList([{
+				id: '3',
+				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+				shape: 'circularImage',
+				background: '#000',
+				color: {
+					border: 'blue'
+				},
+				borderWidth: 10,
+				edges: []
+			}])
+		setGraph(genGraph(level, initialNode, finalNode))
+	}, [])
+	function checkNode(graph, newItem){
+				console.log("newItem", newItem)
+				console.log("selectedList", selectedList)
 		var validation = false;
 		graph.edges.forEach((item, index) => {
-			if(list[list.length - 1].id === item.from && newItem.id === item.to && newItem.id !== initialNode.id){
+			if(selectedList[selectedList.length - 1].id === item.from && newItem.id === item.to && newItem.id !== initialNode.id){
 				validation = true;
 			}
 		})
@@ -76,32 +103,62 @@ const QuestCatalog = () => {
 							newItem = false;
 					})
 					if(newItem){
-						if(checkNode(graph, selectedList, item)){
-							console.log('new item', newItem)
+				console.log('nodes', nodes)
+				console.log('item', item)
+						if(checkNode(graph, item)){
+							console.log('n 1', newItem)
 							console.log('finalNode', finalNode)
 							if(item.id != finalNode){
+								console.log('n 2', newItem)
 								newGraph.nodes[index] = {...item, 'color': {
-									border: 'rgba(50,161,47, 1)'
+									border: 'green'
 								}, borderWidth: 10}
-								setSelectedList([...selectedList, item]);
 							}
 							else {
+								var currentLevel = level
+								console.log('n 3', newItem)
 								console.log('caminho', caminho)
-								setSelectedList([...selectedList, item]);
 								if (bellmanFord(graph, initialNode, finalNode) !== caminho){
+									console.log('n 4', newItem)
 									alert('Caminho errado');
-									setLevel(level)
 								}
 								else{
-									setLevel(level + 10)
+									console.log('n 5', newItem)
+									currentLevel += 10
 									alert('Caminho correto');
 								}
-								newGraph = genGraph(level, initialNode, finalNode)
+								newGraph = genGraph(currentLevel, initialNode, finalNode)
+								setLevel(currentLevel)
+								setSelectedList([{
+										id: '3',
+										image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+										shape: 'circularImage',
+										background: '#000',
+										color: {
+											border: 'blue'
+										},
+										borderWidth: 10,
+										edges: []
+									}])
+								setGraph(genGraph(level, initialNode, finalNode))
+		setSelectedList([{
+				id: '3',
+				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+				shape: 'circularImage',
+				background: '#000',
+				color: {
+					border: 'blue'
+				},
+				borderWidth: 10,
+				edges: []
+			}])
 							}
 						}
+						console.log('newGraph', newGraph)
+						network.setData(newGraph)
 						setGraph(newGraph);
-						network.setData(graph)
 					}
+					setSelectedList([...selectedList, item]);
 				}
 			})
 			console.log('selectedList', selectedList)
