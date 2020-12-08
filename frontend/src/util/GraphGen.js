@@ -68,7 +68,7 @@ export const genGraph = (num, initialNode, finalNode) => {
       edges.push({
         from: base[i].id,
         to: base[i].edges[j],
-        label: ((Math.floor(Math.random() * 35) + 1) * ((Math.round(Math.random()*10)) - 2)).toString(),
+        label: ((Math.floor(Math.random() * 35) + 1) * ((Math.round(Math.random()*30)) - 1)).toString(),
         length: 300
       })
     }
@@ -80,5 +80,6 @@ export const genGraph = (num, initialNode, finalNode) => {
   }
 
 
+	console.log('gen')
   return res
 }

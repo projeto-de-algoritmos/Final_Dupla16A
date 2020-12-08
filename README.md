@@ -1,44 +1,51 @@
-**!! Atenção: Renomeie o seu repositório para (Tema)_(NomeDoProjeto). !!** 
+# Internet 10G
 
-Temas:
- - Grafos1
- - Grafos2
- - PD
- - D&C
- - Greed
- - Final 
- 
- **!! *Não coloque os nomes dos alunos no título do repositório*. Exemplo de título correto: Grafos2_Labirinto-do-Minotauro !!**
- 
- (Apague essa seção)
-
-# NomedoProjeto
-
-**Número da Lista**: X<br>
-**Conteúdo da Disciplina**: XXXXXXXXXX<br>
+**Número da Lista**: Não se Aplica<br>
+**Conteúdo da Disciplina**: Trabalho final<br>
 
 ## Alunos
 |Matrícula | Aluno |
 | -- | -- |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
-| xx/xxxxxx  |  xxxx xxxx xxxxx |
+| 17/0103471  |  Gabriel Marques Tiveron |
+| 17/0115208  |  Victor Levi Peixoto |
 
 ## Sobre 
-Descreva os objetivos do seu projeto e como ele funciona. 
+O projeto consiste num grafo de antenas onde algumas possuem a tecnologia 10G criada por um cientista maluco,
+que pode diminuir seu tempo de resposta,
+o objetivo é conseguir traçar o menor caminho até a antena de destino, porém é possível que hajam ciclos negativos,
+então fique atento!!
 
 ## Screenshots
-Adicione 3 ou mais screenshots do projeto em funcionamento.
+
+Desafio inicial
+![img1](./Tutorial/ex1)
+
+Erro
+![img2](./Tutorial/ex2)
+
+Acerto
+![img3](./Tutorial/ex3)
+
 
 ## Instalação 
-**Linguagem**: xxxxxx<br>
-**Framework**: (caso exista)<br>
-Descreva os pré-requisitos para rodar o seu projeto e os comandos necessários.
+**Linguagem**: JavaScript<br>
+**Framework**: React.js<br>
+Para executar o projeto basta ter o [npm](https://www.npmjs.com/get-npm),
+para instalar o npm num sistema linux basta rodar o comando 
+```
+$ sudo apt install npm
+OU
+$ sudo apt install npm nodejs
+```
+e instalar as dependências por meio do comando ```npm install``` dentro da pasta frontend.
+Por fim, para rodar o projeto é necessário executar o comando ```npm start``` e acessar num
+navegador qualquer a url ```localhost:3000```.
 
 ## Uso 
-Explique como usar seu projeto caso haja algum passo a passo após o comando de execução.
+A utilização consiste em traçar o caminho da antena inicial (azul) até a antena final (vermelha). Caso haja algum ciclo negativo, basta selecionar o botão ```CICLO NEGATIVO```, e então passará de nível.
 
 ## Outros 
-Quaisquer outras informações sobre seu projeto podem ser descritas abaixo.
+É preferível que se utilize o navegador Firefox.
 
 
 
