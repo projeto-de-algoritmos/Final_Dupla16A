@@ -18,13 +18,13 @@ então fique atento!!
 ## Screenshots
 
 Desafio inicial
-![img1](./Tutorial/ex1)
+![img1](./Tutorial/ex1.png)
 
 Erro
-![img2](./Tutorial/ex2)
+![img2](./Tutorial/ex2.png)
 
 Acerto
-![img3](./Tutorial/ex3)
+![img3](./Tutorial/ex3.png)
 
 
 ## Instalação 
