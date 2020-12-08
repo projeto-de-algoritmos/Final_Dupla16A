@@ -140,18 +140,7 @@ const QuestCatalog = () => {
 										borderWidth: 10,
 										edges: []
 									}])
-								setGraph(genGraph(level, initialNode, finalNode))
-		setSelectedList([{
-				id: '3',
-				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
-				shape: 'circularImage',
-				background: '#000',
-				color: {
-					border: 'blue'
-				},
-				borderWidth: 10,
-				edges: []
-			}])
+							setGraph(genGraph(level, initialNode, finalNode))
 							}
 						}
 						console.log('newGraph', newGraph)
@@ -166,9 +155,52 @@ const QuestCatalog = () => {
 		}
 	}
 
+	const verifyCycle = () => {
+		var newGraph;
+		if(bellmanFord(graph, 3, 8) === 'cycle'){
+			newGraph = genGraph(level, initialNode, finalNode)
+			setLevel(level + 10)
+			setSelectedList([{
+					id: '3',
+					image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+					shape: 'circularImage',
+					background: '#000',
+					color: {
+						border: 'blue'
+					},
+					borderWidth: 10,
+					edges: []
+				}])
+			setGraph(genGraph(level, initialNode, finalNode))
+			alert('Resposta correta')
+		}
+		else{
+			newGraph = genGraph(level, initialNode, finalNode)
+			setLevel(level)
+			setSelectedList([{
+					id: '3',
+					image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
+					shape: 'circularImage',
+					background: '#000',
+					color: {
+						border: 'blue'
+					},
+					borderWidth: 10,
+					edges: []
+				}])
+			setGraph(genGraph(level, initialNode, finalNode))
+			alert('Resposta errada')
+		}
+	}
+
 	return (
 		<div>
-			<MGraph network={graph} setNetwork={setNetwork}handler={handleSelect}/>
+			<div style={{justifyContent: 'center', display: 'flex'}}>
+				<Button onClick={() => verifyCycle()}>Ciclo negativo!</Button>
+			</div>
+			<div>
+				<MGraph network={graph} setNetwork={setNetwork}handler={handleSelect}/>
+			</div>
 		</div>
 	);
 }
