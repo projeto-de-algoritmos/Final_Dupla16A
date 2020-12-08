@@ -10,24 +10,25 @@ export const bellmanFord = (graph, begin, end) => {
   dist[begin] = 0
 
   let edgeLen = graph.edges.length
-    for(let j = 0; j < edgeLen; j++){
+  for(let i = 0; i < length; i++)
+    for(let j = 1; j < edgeLen; j++){
       let currEdge = graph.edges[j]
       let w = parseInt(currEdge.label)
-      if(dist[currEdge.from] != MAXWT && dist[currEdge.from] + w < dist[currEdge.to]){
-        dist[currEdge.to] = dist[currEdge.from] + w
+      if(dist[parseInt(currEdge.from)] != MAXWT && dist[parseInt(currEdge.from)] + w < dist[parseInt(currEdge.to)]){
+        dist[parseInt(currEdge.to)] = dist[parseInt(currEdge.from)] + w
       }
     }
+    console.log(dist)
 
-    for(let j = 0; j < edgeLen; j++){
+    for(let j = 1; j < edgeLen; j++){
       let currEdge = graph.edges[j]
       let w = parseInt(currEdge.label)
-      if(dist[currEdge.from] != MAXWT &&
-         dist[currEdge.from] + w < dist[currEdge.to]){
+      if(dist[parseInt(currEdge.from)] != MAXWT &&
+         dist[parseInt(currEdge.from)] + w < dist[parseInt(currEdge.to)]){
         console.log('Ciclo negativo')
-        return -1
+        return "cycle"
       }
     }
 
-  console.log(dist)
   return dist[end]
 }
