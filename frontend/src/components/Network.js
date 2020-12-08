@@ -43,6 +43,7 @@ const QuestCatalog = () => {
   const classes = useStyles();
 
 	useEffect(() => {
+		setCaminho(0)
 		setSelectedList([{
 				id: '3',
 				image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
@@ -59,6 +60,7 @@ const QuestCatalog = () => {
 	}, [graph])
 
 	useEffect(() => {
+		setCaminho(0)
 		console.log('a')
 		setSelectedList([{
 				id: '3',
@@ -89,9 +91,11 @@ const QuestCatalog = () => {
 		selectNode: function (event) {
 			var { nodes, edges } = event;
 			var newGraph = graph;
+			var meioCaminho
 			if(selectedList.length !== 0)
 				newGraph.edges.forEach(elem => {
 					if(elem.from == selectedList[selectedList.length-1].id && elem.to == nodes[0]){
+						meioCaminho = caminho+parseInt(elem.label,10)
 						setCaminho(caminho+parseInt(elem.label,10))
 					}
 				})
@@ -118,13 +122,13 @@ const QuestCatalog = () => {
 								var currentLevel = level
 								console.log('n 3', newItem)
 								console.log('caminho', caminho)
-								if (bellmanFord(graph, initialNode, finalNode) !== caminho){
+								if (bellmanFord(graph, initialNode, finalNode) !== meioCaminho){
 									console.log('n 4', newItem)
 									alert('Caminho errado');
 								}
 								else{
 									console.log('n 5', newItem)
-									currentLevel += 10
+									currentLevel += 2
 									alert('Caminho correto');
 								}
 								newGraph = genGraph(currentLevel, initialNode, finalNode)
@@ -159,7 +163,7 @@ const QuestCatalog = () => {
 		var newGraph;
 		if(bellmanFord(graph, 3, 8) === 'cycle'){
 			newGraph = genGraph(level, initialNode, finalNode)
-			setLevel(level + 10)
+			setLevel(level + 2)
 			setSelectedList([{
 					id: '3',
 					image: `https://e7.pngegg.com/pngimages/607/275/png-clipart-computer-icons-cell-site-tower-aerials-symbol-miscellaneous-text.png`,
